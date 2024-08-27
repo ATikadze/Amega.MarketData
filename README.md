@@ -26,3 +26,6 @@ This program is an MVP. So there are aspects that I would improve in a real life
 * Fire and forget is a bad approach. Instead, ReceiveMessagesAsync should be run as a job, using a separate Hosted Background Service or Hangfire
 * Script for checking closed connections and removing them can be improved significantly
 * Binance may close the connection, either suddenly or after 24 hours. We need to detect that and reopen the connection. In case of a failure, we can implement a retry functionality to occasionally ping the Binance server and once it's up then connect to it. Similar to Circuit Breaker pattern.
+
+#### Resources used
+* https://developers.binance.com/docs/binance-spot-api-docs/web-socket-streams
