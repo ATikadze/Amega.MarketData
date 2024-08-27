@@ -86,7 +86,8 @@ public class WebSocketService : IWebSocketService
     private async Task ReceiveMessagesAsync(ClientWebSocket webSocket, string symbol)
     {
         var buffer = new byte[1024 * 4];
-        
+        var sendTasks = new List<Task>();
+
         while (webSocket.State == WebSocketState.Open && _subscriptions[symbol].Count > 0)
         {
             var result = await webSocket.ReceiveAsync(new ArraySegment<byte>(buffer), CancellationToken.None);
@@ -100,8 +101,12 @@ public class WebSocketService : IWebSocketService
             foreach (var subscription in _subscriptions[symbol])
             {
                 if (subscription.State == WebSocketState.Open)
-                    await SendAsync(subscription, message);
+                    sendTasks.Add(SendAsync(subscription, message));
             }
+
+            await Task.WhenAll(sendTasks); // Execute send to the subscribers in parallel
+
+            sendTasks.Clear();
         }
 
         /* Binance may close the connection, either suddenly or after 24 hours.

@@ -11,7 +11,7 @@ The application is configured to start on port 7194. So that's what the front en
 Steps to test out the program:
 1. Start the API
 2. Open Index.html (I tested it in edge)
-3. The options are going to be listed from the result of an endpoint response
+3. The options are going to be listed from the result of an endpoint response when the page loads
 4. Click Get Price or Subscribe buttons after selecting the symbol
 5. Get Price will trigger an endpoint and retrieve the price for the corresponding symbol
 6. Subscribe button will connect to the web socket and occasionally retrieve updates of the price of the symbol
