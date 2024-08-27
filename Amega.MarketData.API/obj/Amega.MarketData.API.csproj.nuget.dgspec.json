@@ -1,0 +1,149 @@
+{
+  "format": 1,
+  "restore": {
+    "/Users/atikadze/Documents/Projects/C#/Amega.MarketData/Amega.MarketData.API/Amega.MarketData.API.csproj": {}
+  },
+  "projects": {
+    "/Users/atikadze/Documents/Projects/C#/Amega.MarketData/Amega.MarketData.API/Amega.MarketData.API.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "/Users/atikadze/Documents/Projects/C#/Amega.MarketData/Amega.MarketData.API/Amega.MarketData.API.csproj",
+        "projectName": "Amega.MarketData.API",
+        "projectPath": "/Users/atikadze/Documents/Projects/C#/Amega.MarketData/Amega.MarketData.API/Amega.MarketData.API.csproj",
+        "packagesPath": "/Users/atikadze/.nuget/packages/",
+        "outputPath": "/Users/atikadze/Documents/Projects/C#/Amega.MarketData/Amega.MarketData.API/obj/",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "/Users/atikadze/.nuget/NuGet/NuGet.Config"
+        ],
+        "originalTargetFrameworks": [
+          "net8.0"
+        ],
+        "sources": {
+          "https://api.nuget.org/v3/index.json": {},
+          "https://gitlab.com/api/v4/groups/16080151/-/packages/nuget/index.json": {}
+        },
+        "frameworks": {
+          "net8.0": {
+            "targetAlias": "net8.0",
+            "projectReferences": {
+              "/Users/atikadze/Documents/Projects/C#/Amega.MarketData/Amega.MarketData.Core/Amega.MarketData.Core.csproj": {
+                "projectPath": "/Users/atikadze/Documents/Projects/C#/Amega.MarketData/Amega.MarketData.Core/Amega.MarketData.Core.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        },
+        "restoreAuditProperties": {
+          "enableAudit": "true",
+          "auditLevel": "low",
+          "auditMode": "direct"
+        }
+      },
+      "frameworks": {
+        "net8.0": {
+          "targetAlias": "net8.0",
+          "dependencies": {
+            "Swashbuckle.AspNetCore": {
+              "target": "Package",
+              "version": "[6.4.0, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.AspNetCore.App": {
+              "privateAssets": "none"
+            },
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/8.0.202/PortableRuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "/Users/atikadze/Documents/Projects/C#/Amega.MarketData/Amega.MarketData.Core/Amega.MarketData.Core.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "/Users/atikadze/Documents/Projects/C#/Amega.MarketData/Amega.MarketData.Core/Amega.MarketData.Core.csproj",
+        "projectName": "Amega.MarketData.Core",
+        "projectPath": "/Users/atikadze/Documents/Projects/C#/Amega.MarketData/Amega.MarketData.Core/Amega.MarketData.Core.csproj",
+        "packagesPath": "/Users/atikadze/.nuget/packages/",
+        "outputPath": "/Users/atikadze/Documents/Projects/C#/Amega.MarketData/Amega.MarketData.Core/obj/",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "/Users/atikadze/.nuget/NuGet/NuGet.Config"
+        ],
+        "originalTargetFrameworks": [
+          "net8.0"
+        ],
+        "sources": {
+          "https://api.nuget.org/v3/index.json": {},
+          "https://gitlab.com/api/v4/groups/16080151/-/packages/nuget/index.json": {}
+        },
+        "frameworks": {
+          "net8.0": {
+            "targetAlias": "net8.0",
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        },
+        "restoreAuditProperties": {
+          "enableAudit": "true",
+          "auditLevel": "low",
+          "auditMode": "direct"
+        }
+      },
+      "frameworks": {
+        "net8.0": {
+          "targetAlias": "net8.0",
+          "dependencies": {
+            "Microsoft.Extensions.DependencyInjection.Abstractions": {
+              "target": "Package",
+              "version": "[8.0.1, )"
+            },
+            "Microsoft.Extensions.Logging.Abstractions": {
+              "target": "Package",
+              "version": "[8.0.1, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/8.0.202/PortableRuntimeIdentifierGraph.json"
+        }
+      }
+    }
+  }
+}

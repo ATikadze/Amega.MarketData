@@ -1,0 +1,3 @@
+﻿<Project>
+  <Import Project="../buildMultiTargeting/Amega.MarketData.API.props" />
+</Project>

@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WebSocket Data Update</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+
+        .dataContainer {
+            margin-top: 20px;
+        }
+
+        .dataContainer div {
+            margin-bottom: 10px;
+        }
+
+        #status {
+            font-weight: bold;
+        }
+
+        #status.open {
+            color: green;
+        }
+
+        #status.closed {
+            color: red;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Amega: Market Data</h1>
+
+    <select id="tradingPairsDropdown">
+        <option value="">Select an Instrument</option>
+    </select>
+
+    <button id="btnGetPrice" onclick="getPrice()">Get Price</button>
+    <button id="btnSubscribe" onclick="connect()">Subscribe</button>
+
+    <br>
+    <br>
+
+    <div id="priceDisplay">Price:</div>
+
+    <br>
+    <br>
+
+    <div id="subscribeDataContainer">
+        <div>
+            <b>Connection Status: <span id="status" class="closed">Disconnected</span></b>
+        </div>
+
+        <div class="dataContainer">
+            <div>Event Type: <span id="eventType"></span></div>
+            <div>Symbol: <span id="symbol"></span></div>
+            <div>Price Change: <span id="priceChange"></span></div>
+            <div>Price Change Percent: <span id="priceChangePercent"></span></div>
+            <div>Weighted Avg Price: <span id="weightedAvgPrice"></span></div>
+            <div>Previous Close Price: <span id="prevClosePrice"></span></div>
+            <div>Last Price: <span id="lastPrice"></span></div>
+            <div>Bid Price: <span id="bidPrice"></span></div>
+            <div>Ask Price: <span id="askPrice"></span></div>
+            <div>Open Price: <span id="openPrice"></span></div>
+            <div>High Price: <span id="highPrice"></span></div>
+            <div>Low Price: <span id="lowPrice"></span></div>
+            <div>Volume: <span id="volume"></span></div>
+            <div>Quote Volume: <span id="quoteVolume"></span></div>
+        </div>
+    </div>
+
+    <script>
+        var socket;
+        const domain = "localhost:7194";
+
+        async function loadTradingPairs() {
+            try {
+                const response = await fetch(`https://${domain}/api/market/getInstruments`);
+                const data = await response.json();
+
+                if (data.result) {
+                    const dropdown = document.getElementById('tradingPairsDropdown');
+
+                    data.result.forEach(pair => {
+                        const option = document.createElement('option');
+                        option.value = pair;
+                        option.text = pair;
+                        dropdown.add(option);
+                    });
+                } else if (data.errorMessages) {
+                    console.error("Error fetching trading pairs: ", data.errorMessages);
+                }
+            } catch (error) {
+                console.error("An error occurred while fetching trading pairs: ", error);
+            }
+        }
+
+        async function getPrice() {
+            var selectedInstrument = getSelectedInstrument();
+
+            if (!selectedInstrument) {
+                alert("Please select a trading pair first.");
+                return;
+            }
+
+            try {
+                const response = await fetch(`https://${domain}/api/market/getPrice?instrument=${selectedInstrument}`);
+                const data = await response.json();
+
+                if (data.result) {
+                    document.getElementById('priceDisplay').innerText = `Price: ${data.result}`;
+                } else if (data.errorMessages) {
+                    console.error("Error fetching price: ", data.errorMessages);
+                    document.getElementById('priceDisplay').innerText = `Error: ${data.errorMessages}`;
+                }
+            } catch (error) {
+                console.error("An error occurred while fetching the price: ", error);
+                document.getElementById('priceDisplay').innerText = `Error: ${error.message}`;
+            }
+        }
+
+        function getSelectedInstrument() {
+            const dropdown = document.getElementById('tradingPairsDropdown');
+
+            return dropdown.value;
+        }
+
+        async function connect() {
+            var selectedInstrument = getSelectedInstrument();
+
+            if (!selectedInstrument) {
+                alert("Please select a trading pair first.");
+                return;
+            }
+
+            if (socket) {
+                socket.onclose = null;
+                await socket.close();
+            }
+
+            socket = new WebSocket(`wss://${domain}/ws`);
+
+            const statusElement = document.getElementById('status');
+
+            socket.onopen = function (event) {
+                statusElement.textContent = 'Connected';
+                statusElement.className = 'open';
+                socket.send(selectedInstrument);
+            };
+
+            socket.onmessage = function (event) {
+                const data = JSON.parse(event.data);
+
+                document.getElementById('eventType').textContent = data.e;
+                document.getElementById('symbol').textContent = data.s;
+                document.getElementById('priceChange').textContent = data.p;
+                document.getElementById('priceChangePercent').textContent = data.P;
+                document.getElementById('weightedAvgPrice').textContent = data.w;
+                document.getElementById('prevClosePrice').textContent = data.x;
+                document.getElementById('lastPrice').textContent = data.c;
+                document.getElementById('bidPrice').textContent = data.b;
+                document.getElementById('askPrice').textContent = data.a;
+                document.getElementById('openPrice').textContent = data.o;
+                document.getElementById('highPrice').textContent = data.h;
+                document.getElementById('lowPrice').textContent = data.l;
+                document.getElementById('volume').textContent = data.v;
+                document.getElementById('quoteVolume').textContent = data.q;
+            };
+
+            socket.onclose = function (event) {
+                statusElement.textContent = 'Disconnected';
+                statusElement.className = 'closed';
+            };
+
+            socket.onerror = function (error) {
+                console.error('WebSocket error:', error);
+            };
+        }
+
+        loadTradingPairs();
+    </script>
+</body>
+
+</html>
